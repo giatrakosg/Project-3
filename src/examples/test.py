@@ -1,4 +1,7 @@
-from keras.models import load_model
+from keras.models import load_model ,Sequential
+from keras import backend as K
+from keras.layers import Dense, Activation
+
 import numpy as np
 
 # https://stackoverflow.com/questions/47648133/mape-calculation-in-python
@@ -37,4 +40,22 @@ print("MAPE",mape)
 mse = (np.square(y_prob - true)).mean(axis=None)
 print("MSE",mse)
 
+
 model.layers[0].get_weights()
+
+# Create new model with only the first layer
+# https://stackoverflow.com/questions/43871162/how-to-get-output-of-hidden-layer-given-an-input-weights-and-biases-of-the-hidd
+#create new model
+new_model= Sequential([
+    Dense(64, input_dim=128), # first number is output_dim
+    Activation('relu')])
+
+#set weights of the first layer
+new_model.set_weights(model.layers[0].get_weights())
+
+#compile it after setting the weights
+new_model.compile(optimizer='adam', loss='categorical_crossentropy')
+
+#get output of the first dens layer
+out_2 = new_model.predict(example)
+print(out_2)
