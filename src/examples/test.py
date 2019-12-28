@@ -27,9 +27,14 @@ true = [0.1250811072805022,0.1354710268703837,0.08830001267604261,0.115074603168
 
 #https://stackoverflow.com/questions/33359411/mean-absolute-error-python/33359549
 mae = np.sum(np.absolute((y_prob - true)) / true)
-print(mae)
+print("MAE=",mae)
 
 mape = mean_absolute_percentage_error(true,y_prob)
-print(mape)
+print("MAPE",mape)
+
+# https://stackoverflow.com/questions/16774849/mean-squared-error-in-numpy
+# Correct axis ?
+mse = (np.square(y_prob - true)).mean(axis=None)
+print("MSE",mse)
 
 model.layers[0].get_weights()
