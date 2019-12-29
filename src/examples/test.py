@@ -45,7 +45,7 @@ model.layers[0].get_weights()
 
 # Create new model with only the first layer
 # https://stackoverflow.com/questions/43871162/how-to-get-output-of-hidden-layer-given-an-input-weights-and-biases-of-the-hidd
-#create new model
+#create new model (optimizer , loss  ? correct ?)
 new_model= Sequential([
     Dense(64, input_dim=128), # first number is output_dim
     Activation('relu')])
@@ -59,3 +59,5 @@ new_model.compile(optimizer='adam', loss='categorical_crossentropy')
 #get output of the first dens layer
 out_2 = new_model.predict(example)
 print(out_2)
+print(model.get_config())
+print(new_model.get_config())
