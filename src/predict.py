@@ -4,6 +4,7 @@ from keras.layers import Dense, Activation
 import pandas as pd
 import numpy as np
 import sys
+import time
 
 # MAE function
 def mean_absolute_error(y_true,y_pred) :
@@ -26,8 +27,13 @@ model = load_model('../data/WindDenseNN.h5',compile=False)
 model.summary()
 
 
-data = pd.read_csv(sys.argv[2],header=None)
+idf = pd.read_csv(sys.argv[2],header=None)
+actualdf = pd.read_csv('../data/actual.csv',header=None)
 
-r = data.apply(lambda x : (x[0],predict(x[1:].values.reshape(1,-1),model)),axis=1)
+
+begin = time.time()
+r = idf.apply(lambda x : predict(x[1:].values.reshape(1,-1),model),axis=1)
+end = time.time()
+print("Time=",end-begin)
 #r = data.apply(lambda x : (x[0],predict(list((x[1:].values)),model)),axis=1)
 print(r)
