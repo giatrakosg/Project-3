@@ -8,7 +8,7 @@ import time
 
 
 model = load_model('../data/WindDenseNN.h5',compile=False)
-#model.summary()
+
 
 
 # Create new model with only the first layer
@@ -25,47 +25,19 @@ new_model.set_weights(model.layers[0].get_weights())
 new_model.compile(optimizer='adam', loss='categorical_crossentropy')
 
 
+# Input csv file given by user
 idf = pd.read_csv(sys.argv[2],header=None)
-#print(idf)
-
 
 predictions = idf.apply(lambda x : new_model.predict(x[1:].values.reshape(1,-1)).tolist(),axis=1)
 print(idf)
 
-#predictions = predictions.to_frame()
 predictions = pd.DataFrame(item for item in predictions)
 predictions = pd.DataFrame(predictions[0].values.tolist())
-print (predictions)
-
-#predictions = pd.DataFrame.from_items(zip(predictions.index, predictions.values)).T
-
-
-print(predictions)
 predictions = pd.DataFrame(predictions.values)
 
-#predictions = pd.DataFrame.from_records(predictions.values,index=predictions.index)
-
-
-#print(predictions)
-#print(predictions2)
-#predictions2 = predictions.apply(pd.Series)
-
-#expanded = predictions.apply(lambda x : np.reshape(x,64),axis=1)
-#print(expanded)
 
 timestamps = idf.loc[:,0]
-#timestamps = pd.DataFrame.from_records(timestamps.values,index=timestamps.index)
-
-#timestamps = np.vstack(timestamps)
-
-#timestamps.squeeze()
 timestamps = timestamps.to_frame('ts')
-print(timestamps)
-#predictions['ts'] = timestamps.values
-
-#combined = timestamps.merge(predictions)
-
-#combined = pd.concat([timestamps, predictions], axis=1, ignore_index=True)
 
 combined = timestamps.join(predictions,how='left')
 #print(timestamps)
@@ -73,4 +45,4 @@ combined = timestamps.join(predictions,how='left')
 #print(predictions)
 print(combined)
 
-combined.to_csv(index=False,sep="\t",path_or_buf="out.csv")
+combined.to_csv(header=False,index=False,sep="\t",path_or_buf="out.csv")
