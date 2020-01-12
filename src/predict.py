@@ -19,13 +19,14 @@ def mean_absolute_error(y_true,y_pred) :
     y_true = y_true.values
     return np.sum(np.abs(y_true - y_pred)) / y_true.size
 
-def mape_error(y_true, y_pred,mean_true):
+def mape_error(y_true, y_pred):
     y_true = y_true.values
-    mean_true = mean_true.values
     #import pdb; pdb.set_trace()
+    return np.sum(np.abs(y_true - y_pred) / y_pred) / y_true.size
+
     sum = 0
-    for x,y,z in zip(y_pred , y_true,mean_true) :
-        sum += (np.abs(x-y)) / z
+    for x,y in zip(y_pred , y_true) :
+        sum += np(np.abs(x-y)) / y
     return sum / y_true.size
 
 def mean_square_root(y_true,y_pred) :
@@ -33,7 +34,7 @@ def mean_square_root(y_true,y_pred) :
 
 def predict(input,model):
     y_prob = model.predict(input)
-    return y_prob
+    return y_prob.flatten()
 
 
 model = load_model('../data/WindDenseNN.h5',compile=False)
@@ -50,6 +51,11 @@ print(mean_actual)
 begin = time.time()
 predicted = idf.apply(lambda x : predict(x[1:].values.reshape(1,-1),model),axis=1)
 end = time.time()
+
+combined = actualdf.copy()
+pd.concat([combined,pd.DataFrame(predicted)],axis=1)
+print("====Combined====")
+print(combined)
 
 print("Time=",end-begin)
 print("====Predicted====")
@@ -83,7 +89,22 @@ print(mse)
 mean_actual = actualdf[1:8].mean(axis=1)
 print(mean_actual)
 
-mape_series = actualdf.apply(lambda x : mape_error(x[1:8],x['predicted'],mean_actual),axis=1)
-mape = mape_series.mean().mean()
+mape_series = actualdf.apply(lambda x : mape_error(mean_actual,x['predicted']),axis=1)
+mape = mape_series.mean() * 100
 print(mape_series)
 print(mape)
+
+with open('predicted.csv',"w")  as out:
+    out.write("MAE:{} MAPE:{} MSE:{}\n".format(mae,mape,mse))
+    for row in actualdf.iterrows():
+        ts = str(row[1][0])
+        pr = str(row[1]['predicted'].tolist())
+        pr = pr[1:-1]
+        pr = pr.replace(',','')
+        out.write(ts)
+        out.write('\t')
+        out.write(pr)
+        out.write('\n')
+
+
+#actualdf.to_csv(header=False,index=False,sep="\t",path_or_buf="predicted.csv",columns=[0,'predicted'])
