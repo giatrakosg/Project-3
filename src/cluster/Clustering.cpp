@@ -507,7 +507,10 @@ int Clustering::nearest_cluster(int cluster){
         if (x.first == cluster){
             continue;
         }
-        double dist = centroid1->distance(x.second);
+        double dist ;
+        if(x.second != NULL) {
+            dist = centroid1->distance(x.second);
+        }
         if (dist < min_dist){
             min_dist = dist;
             n_cluster = x.first ;
@@ -591,7 +594,9 @@ void Clustering::printResults(std::ostream &out,bool complete) {
                 out << "centroid :" << centroid->getId() << "}" ;
             } else {
                 Vector *centroid = dynamic_cast<Vector *>(representative[i]);
-                out << *centroid ;
+                if (centroid != NULL) {
+                    out << *centroid ;
+                }
             }
             out << std::endl ;
         }
