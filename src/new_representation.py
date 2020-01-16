@@ -43,6 +43,6 @@ combined = timestamps.join(predictions,how='left')
 #print(timestamps)
 #print(predictions2)
 #print(predictions)
-#print(combined)
+print(combined)
 
 combined.to_csv(header=False,index=False,sep="\t",path_or_buf="../data/new_representation.csv")
