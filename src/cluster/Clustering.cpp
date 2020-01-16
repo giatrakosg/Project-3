@@ -210,7 +210,7 @@ int Clustering::find_new_centroid(set<int> &used){
         partial_sum_array.push_back(std::pair<int,double> (i,p.second + min_distance)) ; //pros8etw ti metriki apostasi tou proigoumenou
         //item me tou trexontos wste na ftia3w ti meriki apostasi tou trexontos item
     }
-    std::uniform_int_distribution<int> distribution(0,partial_sum_array[partial_sum_array.size() - 1].second) ;
+    std::uniform_real_distribution<double> distribution(0,partial_sum_array[partial_sum_array.size() - 1].second) ;
     double x = distribution(this-> generator) ; //pairnw ena random ari8mo anamesa sto 0 kai ti megisti metriki apostasi
     //pou einai i metriki apostasi tou item tou teleutaiou antikeimenou tou pinaka partial_sum_arrat
     int new_centroid_position = Binary_search(partial_sum_array,x,partial_sum_array[1].first,partial_sum_array[partial_sum_array.size() - 1].first);
@@ -237,7 +237,7 @@ int Clustering::Binary_search(vector< std::pair<int,double> > &partial_sum_array
         else{
             l = mid + 1;
         }
-    }    
+    }
     /*if (r >= 1){
         int mid = (l + (r - 1)) / 2;
         double var1 = abs(x - partial_sum_array[mid].second ) ; //to var1 einai i diafora meta3u tou ari8mou pou diale3ame tuxaia kai tou mid

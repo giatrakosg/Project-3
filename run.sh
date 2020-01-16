@@ -14,7 +14,8 @@ python new_representation.py -i ../data/nn_representations.csv
 echo 'Done'
 echo 'Creating samples..'
 shuf -n 500 ../data/new_representation.csv > ../data/new_representation_random.csv
-shuf -n 500 ../data/predicted.csv > ../data/predicted_random.csv
+sed 1d ../data/predicted.csv > ../data/predicted_correct.csv
+shuf -n 501 ../data/predicted_correct.csv > ../data/predicted_random.csv
 echo 'Done'
 cd cluster
 echo 'Run clustering for months on nn_representations.csv'

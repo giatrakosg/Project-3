@@ -101,7 +101,7 @@ with open('../data/predicted.csv',"w")  as out:
         ts = str(row[1][0])
         pr = str(row[1]['predicted'].tolist())
         pr = pr[1:-1]
-        pr = pr.replace(',','')
+        pr = pr.replace(',','\t')
         out.write(ts)
         out.write('\t')
         out.write(pr)
