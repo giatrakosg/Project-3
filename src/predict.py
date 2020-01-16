@@ -42,7 +42,7 @@ model = load_model('../data/WindDenseNN.h5',compile=False)
 
 
 idf = pd.read_csv(sys.argv[2],header=None)
-actualdf = pd.read_csv(sys.argv[3],header=None)
+actualdf = pd.read_csv('../data/actual.csv',header=None)
 
 mean_actual = actualdf.mean(axis=0)
 print(mean_actual)
@@ -94,7 +94,7 @@ mape = mape_series.mean() * 100
 print(mape_series)
 print(mape)
 
-with open('predicted.csv',"w")  as out:
+with open('../data/predicted.csv',"w")  as out:
     out.write("MAE:{} MAPE:{} MSE:{}\n".format(mae,mape,mse))
     for row in actualdf.iterrows():
         ts = str(row[1][0])
