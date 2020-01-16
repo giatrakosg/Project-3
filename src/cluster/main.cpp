@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
     //std::vector<std::thread *> threads;
     //std::thread * cluster_ts = new std::thread[8] ;
     for (unsigned int i = 0; i < 8; i++) {
-        int err ;
+        //int err ;
         int mask1 = 1 << 0 ;
         int mask2 = 1 << 1 ;
         int mask3 = 1 << 2 ;
@@ -57,9 +57,11 @@ int main(int argc, char **argv) {
         args.flags[2] = (i & mask3) >> 2;
 
         args.isCurve = isCurve ;
+        /*
         if ((args.flags[0] == 1) ) {
             continue ;
         }
+        */
 
         args.k = nclusters ;
 

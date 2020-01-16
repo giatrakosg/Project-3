@@ -41,6 +41,18 @@ int Database::getIndex(Item *q){
     }
     return -1 ;
 }
+void Database::calculateDist(void) {
+    for (int i = 0; i < this->getSize(); i++) {
+        for (int j = 0; j < this->getSize(); j++) {
+            double d = this->getItem(i)->distance(this->getItem(j));
+            dist[std::pair<int,int> (i,j)] = d ;
+        }
+    }
+
+}
+double Database::getDistance(int index1,int index2) {
+    return dist[std::pair<int,int> (index1,index2)];
+}
 Database::~Database() {
     for (size_t i = 0; i < items.size(); i++) {
         delete items[i] ;

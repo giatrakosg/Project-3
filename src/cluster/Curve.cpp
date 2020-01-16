@@ -171,7 +171,7 @@ int Curve::getDimension(void) {
 Vector * Curve::toVector(int n) {
     Vector *v1 = new Vector(this->getId());
     double max = -1 * INFINITY ;
-    for (int i = 0;( i < points.size()) && (i < n); i++) {
+    for (size_t i = 0;( i < points.size()) && (i < (size_t) n); i++) {
         double x = points[i]->x ;
         double y = points[i]->y ;
         if (x > max) {

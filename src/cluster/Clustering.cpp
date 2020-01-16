@@ -15,14 +15,9 @@ Clustering::Clustering(Database *db,bool isCurve , int num_of_clusters ,int init
 
     std::cout << "Started clustering with \n" <<
     "k=" << k << std::endl ;
-        std::cout << "Calculating pairwise distances...." ;
-        for (int i = 0; i < db->getSize(); i++) {
-            for (int j = 0; j < db->getSize(); j++) {
-                double d = db->getItem(i)->distance(db->getItem(j));
-                dist[std::pair<int,int> (i,j)] = d ;
-            }
-        }
-        std::cout << "done" << std::endl ;
+    std::cout << "Calculating pairwise distances...." ;
+    db->calculateDist();
+    std::cout << "done" << std::endl ;
 
     if (flags[1] == 1) {
         std::cout << "initializing hashtable..." ;
@@ -227,14 +222,14 @@ int Clustering::find_new_centroid(set<int> &used){
 //epistrefei ti 8esi tou neou centroid sto db
 int Clustering::Binary_search(vector< std::pair<int,double> > &partial_sum_array,double x,int l,int r){ //to l einai to prwto kai to r einai to teleutaio stoixeio
     while (l<=r){
-        int mid = (l + (r - 1)) / 2;
+        int mid = ceil((l + (r - 1)) / 2.0);
         double var1 = abs(x - partial_sum_array[mid].second ) ; //to var1 einai i diafora meta3u tou ari8mou pou diale3ame tuxaia kai tou mid
         //einai to middle tou ka8e upopinaka
         double var2 = abs(partial_sum_array[mid].second - partial_sum_array[mid - 1].second ) ;
         //to var2 einai i diafora meta3u tou ari8mou pou diale3ame tuxaia kai tou mid-1 pou einai o proigoumenos ari8mos apo to middle
         double var3 = abs(partial_sum_array[mid].second - partial_sum_array[mid + 1].second ) ;
         //antistoixa gia ta mid+1
-        if (var1 <= var2 && var1<=var3 )
+        if ((var1 <= var2) && (var1<= var3) )
             return partial_sum_array[mid].first;
         if (x < partial_sum_array[mid].second )
             r = mid - 1;
@@ -366,7 +361,7 @@ void Clustering::pam_update(void) {
             for (size_t j = 0; j < items.size(); j++) {
                 int index2 = items[j] ;
                 //total_dist += items[j]->distance(items[i]);
-                total_dist += dist[pair<int,int>(index1,index2)] ; // We have already calculated the pairwise distances
+                total_dist += db->getDistance(index1,index2) ; // We have already calculated the pairwise distances
             }
             if (total_dist < min_total_dist) {
                 min_total_dist = total_dist ;
@@ -539,11 +534,11 @@ double Clustering::Silhouette_point(int cluster,int point,int nearest_cluster){
     {
         if (cluster_points[i] == point)
             continue;
-        ai += dist[pair<int,int>(point,cluster_points[i])];
+        ai += db->getDistance(point,cluster_points[i]);
     }
     for (unsigned i = 0; i < nearest_cluster_points.size(); ++i)
     {
-        bi += dist[pair<int,int>(point,nearest_cluster_points[i])];
+        bi += db->getDistance(point,nearest_cluster_points[i]);
     }
     ai = ai / cluster_points.size();
     bi = bi / nearest_cluster_points.size();
@@ -611,7 +606,7 @@ void Clustering::printResults(std::ostream &out,bool complete) {
     }
     out << "clustering_time :" << elapsed_secs << std::endl ;
     out << "Silhouette : [" ;
-    for (size_t i = 0; i < k; i++) {
+    for (int i = 0; i < k; i++) {
         scluster = Silhouette_cluster(i);
         out << scluster << "," ;
     }

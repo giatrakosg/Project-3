@@ -25,6 +25,7 @@
 #include "Curve.hpp"
 #include "Vector.hpp"
 #include "Hashtable.h"
+#include <math.h>
 
 
 #define private public
@@ -75,7 +76,6 @@ private:
 
     int flags[3] ; // Flags used to determine which algorithms are used
     // for init , assign and update given by user
-    std::map<pair<int,int> , double> dist; // Map with distances of each pair
     // of items
     std::map<int, Item *> representative; // Map that matches each cluster to each
     // representative center
