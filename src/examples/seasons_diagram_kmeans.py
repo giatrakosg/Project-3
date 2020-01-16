@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-seasons_nn = [0.220106,0.0427614,0.0576579,0.0925214]
-seasons_pr = [0.19907,0.0911062,0.107741,0.137663]
+seasons_nn = [0.140365,0.0667735,0.0269824,0.285229]
+seasons_pr = [0.118181,0.170835,0.218868,0.0535329]
 x = [1,2,3,4]
 
 #Plot the points

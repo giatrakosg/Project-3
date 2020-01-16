@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-labels = ['Cluster 1', 'Cluster 2', 'Cluster 3', 'Cluster 4']
-nn_kmeans = [172, 77, 48, 202]
-pr_kmeans = [121, 166, 156, 57]
+labels = ['Cluster 1', 'Cluster 2', 'Cluster 3', 'Cluster 4', 'Cluster 5', 'Cluster 6', 'Cluster 7', 'Cluster 8', 'Cluster 9', 'Cluster 10', 'Cluster 11', 'Cluster 12']
+nn_kmeans = [33, 7, 38, 36, 106, 23, 46, 70, 63, 23, 28, 26]
+pr_kmeans = [65, 34, 32, 20, 49, 49, 53, 35, 71, 9, 62 ,21]
 
 x = np.arange(len(labels))  # the label locations
 width = 0.35  # the width of the bars
