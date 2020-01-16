@@ -226,7 +226,21 @@ int Clustering::find_new_centroid(set<int> &used){
 
 //epistrefei ti 8esi tou neou centroid sto db
 int Clustering::Binary_search(vector< std::pair<int,double> > &partial_sum_array,double x,int l,int r){ //to l einai to prwto kai to r einai to teleutaio stoixeio
-    if (r >= 1){
+    while (l<=r){
+        int mid = (l + (r - 1)) / 2;
+        double var1 = abs(x - partial_sum_array[mid].second ) ; //to var1 einai i diafora meta3u tou ari8mou pou diale3ame tuxaia kai tou mid
+        //einai to middle tou ka8e upopinaka
+        double var2 = abs(partial_sum_array[mid].second - partial_sum_array[mid - 1].second ) ;
+        //to var2 einai i diafora meta3u tou ari8mou pou diale3ame tuxaia kai tou mid-1 pou einai o proigoumenos ari8mos apo to middle
+        double var3 = abs(partial_sum_array[mid].second - partial_sum_array[mid + 1].second ) ;
+        //antistoixa gia ta mid+1
+        if (var1 <= var2 && var1<=var3 )
+            return partial_sum_array[mid].first;
+        if (x < partial_sum_array[mid].second )
+            r = mid - 1;
+        l = mid + 1;
+    }    
+    /*if (r >= 1){
         int mid = (l + (r - 1)) / 2;
         double var1 = abs(x - partial_sum_array[mid].second ) ; //to var1 einai i diafora meta3u tou ari8mou pou diale3ame tuxaia kai tou mid
         //einai to middle tou ka8e upopinaka
@@ -239,7 +253,7 @@ int Clustering::Binary_search(vector< std::pair<int,double> > &partial_sum_array
         if (x < partial_sum_array[mid].second )
             return Binary_search(partial_sum_array,x, l , mid - 1);
         return Binary_search(partial_sum_array,x, mid + 1, r );
-    }
+    }*/
     return -1;
 }
 
