@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
         args.flags[2] = (i & mask3) >> 2;
 
         args.isCurve = isCurve ;
-        if ((args.flags[1] == 1) && (isCurve)) {
+        if ((args.flags[0] == 1) ) {
             continue ;
         }
 
