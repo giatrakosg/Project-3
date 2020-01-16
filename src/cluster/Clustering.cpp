@@ -229,7 +229,7 @@ int Clustering::Binary_search(vector< std::pair<int,double> > &partial_sum_array
         //to var2 einai i diafora meta3u tou ari8mou pou diale3ame tuxaia kai tou mid-1 pou einai o proigoumenos ari8mos apo to middle
         double var3 = abs(partial_sum_array[mid].second - partial_sum_array[mid + 1].second ) ;
         //antistoixa gia ta mid+1
-        if ((var1 <= var2) && (var1<= var3) )
+        if ( ((var1 <= var2) && (var1<= var3) ) || (mid == l && mid == r) )
             return partial_sum_array[mid].first;
         if (x < partial_sum_array[mid].second ){
             r = mid - 1;
