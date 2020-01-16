@@ -236,12 +236,13 @@ int Clustering::Binary_search(vector< std::pair<int,double> > &partial_sum_array
         //antistoixa gia ta mid+1
         if (var1 <= var2 && var1<=var3 )
             return partial_sum_array[mid].first;
-        if (x < partial_sum_array[mid].second )
+        if (x < partial_sum_array[mid].second ){
             r = mid - 1;
+        }
         else{
             l = mid + 1;
         }
-    }
+    }    
     /*if (r >= 1){
         int mid = (l + (r - 1)) / 2;
         double var1 = abs(x - partial_sum_array[mid].second ) ; //to var1 einai i diafora meta3u tou ari8mou pou diale3ame tuxaia kai tou mid
