@@ -45,7 +45,7 @@ idf = pd.read_csv(sys.argv[2],header=None)
 actualdf = pd.read_csv('../data/actual.csv',header=None)
 
 mean_actual = actualdf.mean(axis=0)
-print(mean_actual)
+#print(mean_actual)
 
 
 begin = time.time()
@@ -54,32 +54,32 @@ end = time.time()
 
 combined = actualdf.copy()
 pd.concat([combined,pd.DataFrame(predicted)],axis=1)
-print("====Combined====")
-print(combined)
+#print("====Combined====")
+#print(combined)
 
 print("Time=",end-begin)
-print("====Predicted====")
-print(predicted)
-print("====Actual====")
-print(actualdf)
-print("====Combined====")
+#print("====Predicted====")
+#print(predicted)
+#print("====Actual====")
+#print(actualdf)
+#print("====Combined====")
 actualdf['predicted'] = predicted
-print(actualdf)
+#print(actualdf)
 
 error_series = actualdf.apply(lambda x : mean_absolute_error(x[1:8],x['predicted']),axis=1)
 
 mae = error_series.mean()
 actualdf['abs_error'] = error_series
-print("====Absolute Error====")
-print(actualdf)
+#print("====Absolute Error====")
+#print(actualdf)
 print("====MAE====")
 print(mae)
 
 square_error_series = error_series.apply(lambda x : x*x )
-print(square_error_series)
+#print(square_error_series)
 actualdf['abs_sq_error'] = square_error_series
-print("====Square Error====")
-print(actualdf)
+#print("====Square Error====")
+#print(actualdf)
 mse = square_error_series.mean()
 print("====MSE====")
 print(mse)
@@ -87,11 +87,12 @@ print(mse)
 
 # Calculate average actual value to use in the MAPE
 mean_actual = actualdf[1:8].mean(axis=1)
-print(mean_actual)
+#print(mean_actual)
 
 mape_series = actualdf.apply(lambda x : mape_error(mean_actual,x['predicted']),axis=1)
 mape = mape_series.mean() * 100
-print(mape_series)
+#print(mape_series)
+print("====MAPE====")
 print(mape)
 
 with open('../data/predicted.csv',"w")  as out:

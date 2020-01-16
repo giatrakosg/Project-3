@@ -29,7 +29,7 @@ new_model.compile(optimizer='adam', loss='categorical_crossentropy')
 idf = pd.read_csv(sys.argv[2],header=None)
 
 predictions = idf.apply(lambda x : new_model.predict(x[1:].values.reshape(1,-1)).tolist(),axis=1)
-print(idf)
+#print(idf)
 
 predictions = pd.DataFrame(item for item in predictions)
 predictions = pd.DataFrame(predictions[0].values.tolist())
@@ -43,6 +43,6 @@ combined = timestamps.join(predictions,how='left')
 #print(timestamps)
 #print(predictions2)
 #print(predictions)
-print(combined)
+#print(combined)
 
 combined.to_csv(header=False,index=False,sep="\t",path_or_buf="../data/new_representation.csv")
