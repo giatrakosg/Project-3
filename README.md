@@ -1,11 +1,13 @@
 # Project 3
+A small project using keras to classify wind data and cluster them .
 
-## Λεπτομερειες υλοποιησης
+## Description
 
- 1.Στον φακελο src εχουμε τα δυο python scripts
- 2.Στον φακελο src/cluster εχουμε τα αρχεια υλοποιησης για το cluster
- 3.Στον φακελο src/examples παραδειγματα απο την θεωρια και python scirpts για τα διαγραμματα
+University Project learning to use keras , for classifying data . We classify wind data using a pretrained model 'WindDense.h5 . We compare  the results of clustering from the last and before last clusters , to determine the improvement that the last layer makes .
 
+## Run 
+After installing dependecies in requirements.txt in a virtual environemt /venv/. Run :
+./run.sh
 
 ## Παρατηρησεις
 
